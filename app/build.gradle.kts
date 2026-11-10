@@ -31,6 +31,8 @@ android {
         jvmTarget = "17"
     }
 
+    sourceSets.getByName("main").java.srcDir("apps/aurora-settings/app/src/main/java")
+
     buildFeatures {
         compose = true
     }
