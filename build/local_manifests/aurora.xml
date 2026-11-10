@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+    <remote name="aurora-github" fetch="https://github.com/" />
+
+    <!-- Shared fleur/miel MT6781 device support -->
+    <project name="mt6781-devs/android_device_xiaomi_fleur"
+             path="device/xiaomi/fleur"
+             remote="aurora-github"
+             revision="lineage-23.2" />
+
+    <project name="mt6781-devs/android_kernel_xiaomi_mt6781"
+             path="kernel/xiaomi/mt6781"
+             remote="aurora-github"
+             revision="lineage-23.2" />
+
+    <project name="z3rh0/proprietary_vendor_xiaomi_fleur"
+             path="vendor/xiaomi/fleur"
+             remote="aurora-github"
+             revision="lineage-23.2" />
+
+    <project name="LineageOS/android_device_mediatek_sepolicy_vndr"
+             path="device/mediatek/sepolicy_vndr"
+             remote="aurora-github"
+             revision="lineage-23.2" />
+</manifest>
