@@ -1,26 +1,54 @@
 # Aurora Settings
 
-The first standalone Aurora OS application prototype.
+Standalone Jetpack Compose prototype for Aurora OS.
 
-## Purpose
+## Requirements
 
-Build the visual language and interaction patterns for Aurora's redesigned Settings app before integrating them into the Android framework.
+- Android Studio with JDK 17
+- Android SDK Platform 35
+- Android SDK Build-Tools 35
+- Gradle 8.9
 
-## First milestone
+## Project layout
 
-- Editorial, search-first Settings home
-- Muted Aurora colour palette
-- Reusable category rows and section headers
-- Light and dark theme tokens
+The Android Gradle project is configured at the repository root. The app module is `:app`; its Kotlin sources remain under `apps/aurora-settings/app/src/main/java` and are included through the app module's source set.
+
+## Open and build
+
+Open the repository root in Android Studio. Allow Gradle sync to complete, then select the `:app` run configuration.
+
+The Gradle wrapper distribution is configured for Gradle 8.9. Wrapper scripts and the wrapper JAR are not committed yet. If Gradle is installed locally, generate them with:
+
+```bash
+gradle wrapper --gradle-version 8.9
+```
+
+Then build a debug APK:
+
+```bash
+./gradlew :app:assembleDebug
+```
+
+APK output:
+
+`app/build/outputs/apk/debug/app-debug.apk`
+
+## Device testing
+
+Enable USB debugging on an Android test device, connect it, then run:
+
+```bash
+./gradlew :app:installDebug
+```
+
+This is a standalone app prototype. It is not yet the privileged/system Settings app and does not modify Android system settings.
 
 ## Current status
 
-UI prototype source is being established. This is not yet integrated into the Android system Settings package and does not change the ROM.
-
-## Design rules
-
-- Porcelain surfaces and charcoal text in light mode
-- Charcoal surfaces in dark mode, never pure black by default
-- Sage, mist, clay and sand as restrained accents
-- Moderate rounded corners; avoid making every control a pill
-- Clear hierarchy, generous spacing and readable labels
+- [x] Initial Compose screen
+- [x] Aurora base palette
+- [x] Gradle project configuration
+- [ ] Search interaction
+- [ ] Settings category navigation
+- [ ] Dark theme
+- [ ] Accessibility and responsive layout review
