@@ -100,3 +100,28 @@ Do not run erase, format, unlock, lock, or flash commands during identification.
 - [ ] Select Android base only after compatibility review
 
 No device-specific source has been accepted for a build yet.
+
+
+## Source audit — LineageOS 23.2 candidate (2026-11-10)
+
+Inspected the public `mt6781-devs/android_device_xiaomi_fleur` repository at ref `lineage-23.2`.
+
+Observed:
+
+- `BoardConfig.mk` targets `mt6781`, arm64, A/B / Virtual A/B, and dynamic partitions.
+- It uses `TARGET_KERNEL_SOURCE := kernel/xiaomi/mt6781` and `TARGET_KERNEL_CONFIG := fleur_defconfig`.
+- It defines dynamic partitions for system, system_ext, product, vendor, and odm.
+- `device.mk` copies files from a `sku/` directory into ODM and imports a build property file selected by `ro.boot.product.vendor.sku` through `odm.prop`. This makes the reported hardware SKU relevant to variant-specific configuration.
+- `lineage_fleur.mk` still sets the generic product identity to `fleur` and Redmi branding. This is a shared-family product configuration, not proof that a generated image is already tailored correctly for the POCO SKU.
+- The tree includes shared NFC-related packages and SKU-specific permission XMLs. The exact `mielp` / non-NFC behavior must be checked in the SKU files and runtime feature declarations; unconditional package inclusion alone does not prove NFC is exposed to the OS.
+- The README identifies the tree as the Redmi Note 11S 4G / POCO M4 Pro 4G family.
+
+Important correction: the older `xiaomi-mt6781-fleur-dev/android_device_xiaomi_fleur` branch `lineage-20.0` is Android 13-era and must not be confused with the newer `mt6781-devs/android_device_xiaomi_fleur` branch `lineage-23.2`.
+
+Current assessment: `lineage-23.2` is a promising Android 16-era shared-family bring-up candidate, but not yet approved for Aurora. The next audit must verify the exact `mielp` SKU configuration, kernel repository/branch, vendor repository/branch, firmware compatibility, and build manifest/dependencies.
+
+Inspected source:
+- https://github.com/mt6781-devs/android_device_xiaomi_fleur/tree/lineage-23.2
+- https://github.com/mt6781-devs/android_device_xiaomi_fleur/blob/lineage-23.2/BoardConfig.mk
+- https://github.com/mt6781-devs/android_device_xiaomi_fleur/blob/lineage-23.2/device.mk
+- https://github.com/mt6781-devs/android_device_xiaomi_fleur/blob/lineage-23.2/lineage_fleur.mk
