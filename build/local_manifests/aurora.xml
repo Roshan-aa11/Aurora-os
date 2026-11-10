@@ -18,6 +18,16 @@
              remote="aurora-github"
              revision="lineage-23.2" />
 
+    <project name="LineageOS/android_hardware_mediatek"
+             path="hardware/mediatek"
+             remote="aurora-github"
+             revision="lineage-23.2" />
+
+    <project name="LineageOS/android_hardware_xiaomi"
+             path="hardware/xiaomi"
+             remote="aurora-github"
+             revision="lineage-23.2" />
+
     <project name="LineageOS/android_device_mediatek_sepolicy_vndr"
              path="device/mediatek/sepolicy_vndr"
              remote="aurora-github"
