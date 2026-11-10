@@ -1,0 +1,36 @@
+name: Aurora OS repository checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate project structure
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Check required project files
+        run: |
+          set -eu
+          test -f README.md
+          test -f docs/PROJECT.md
+          test -f design/DESIGN_SYSTEM.md
+          test -f device/README.md
+          echo "Required Aurora OS project files are present."
+
+      - name: Check documentation is not empty
+        run: |
+          set -eu
+          for file in README.md docs/PROJECT.md design/DESIGN_SYSTEM.md device/README.md; do
+            test -s "$file"
+          done
+          echo "Documentation checks passed."
