@@ -1,9 +1,12 @@
 package os.aurora.settings
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +23,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +38,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun AuroraSettingsApp() {
+    val context = LocalContext.current
+
+    fun openSystemSettings(action: String) {
+        context.startActivity(Intent(action))
+    }
+
     MaterialTheme(
         colorScheme = lightColorScheme(
             background = AuroraPalette.Porcelain,
@@ -57,7 +67,16 @@ private fun AuroraSettingsApp() {
                     Text("Make your phone feel like yours.", fontSize = 14.sp, color = AuroraPalette.Charcoal.copy(alpha = 0.66f))
                 }
                 SearchPanel()
-                SettingsSection("Connectivity", listOf("Network & internet", "Connected devices"))
+                SettingsSection(
+                    title = "Connectivity",
+                    items = listOf("Network & internet", "Connected devices"),
+                    onItemClick = { item ->
+                        when (item) {
+                            "Network & internet" -> openSystemSettings(Settings.ACTION_WIRELESS_SETTINGS)
+                            "Connected devices" -> openSystemSettings(Settings.ACTION_BLUETOOTH_SETTINGS)
+                        }
+                    }
+                )
                 SettingsSection("Personalisation", listOf("Wallpaper & style", "Display", "Sound & vibration"))
                 SettingsSection("Device", listOf("Battery", "Storage", "Security & privacy"))
             }
@@ -78,7 +97,11 @@ private fun SearchPanel() {
 }
 
 @Composable
-private fun SettingsSection(title: String, items: List<String>) {
+private fun SettingsSection(
+    title: String,
+    items: List<String>,
+    onItemClick: ((String) -> Unit)? = null
+) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(title.uppercase(), fontSize = 11.sp, letterSpacing = 1.2.sp, color = AuroraPalette.Sage, fontWeight = FontWeight.SemiBold)
         Column(
@@ -89,7 +112,10 @@ private fun SettingsSection(title: String, items: List<String>) {
         ) {
             items.forEachIndexed { index, item ->
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 14.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .then(if (onItemClick != null) Modifier.clickable { onItemClick(item) } else Modifier)
+                        .padding(vertical = 14.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(item, color = AuroraPalette.Charcoal, fontSize = 15.sp)
