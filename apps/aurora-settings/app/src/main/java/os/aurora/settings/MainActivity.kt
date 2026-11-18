@@ -109,7 +109,7 @@ private fun SettingsSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.White.copy(alpha = 0.48f), RoundedCornerShape(20.dp))
-                .padding(horizontal = 16.dp, vertical = 4.dp)
+                .padding(vertical = 4.dp)
         ) {
             items.forEachIndexed { index, item ->
                 Row(
@@ -122,7 +122,7 @@ private fun SettingsSection(
                                     .clickable { onItemClick(item) }
                             } else Modifier
                         )
-                        .padding(vertical = 14.dp),
+                        .padding(horizontal = 16.dp, vertical = 14.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(item, color = AuroraPalette.Charcoal, fontSize = 15.sp)
