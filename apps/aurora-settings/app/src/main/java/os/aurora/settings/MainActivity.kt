@@ -7,6 +7,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.material.ripple.ripple
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.remember
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +26,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -114,7 +118,16 @@ private fun SettingsSection(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .then(if (onItemClick != null) Modifier.clickable { onItemClick(item) } else Modifier)
+                        .then(
+                            if (onItemClick != null) {
+                                Modifier
+                                    .clip(RoundedCornerShape(14.dp))
+                                    .clickable(
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        indication = ripple(color = AuroraPalette.Sage.copy(alpha = 0.20f))
+                                    ) { onItemClick(item) }
+                            } else Modifier
+                        )
                         .padding(vertical = 14.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
