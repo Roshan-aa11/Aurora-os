@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import os.aurora.settings.ui.theme.AuroraPalette
+import os.aurora.settings.ui.theme.AuroraTheme
 
 private data class Entry(val title: String, val subtitle: String, val page: String)
 private data class Group(val title: String, val entries: List<Entry>)
@@ -62,11 +63,7 @@ class MainActivity : ComponentActivity() {
 private fun AuroraSettingsApp() {
     var page by remember { mutableStateOf<String?>(null) }
     var query by remember { mutableStateOf("") }
-    MaterialTheme(colorScheme = lightColorScheme(
-        background = AuroraPalette.Porcelain, surface = Color.White,
-        onBackground = AuroraPalette.Charcoal, onSurface = AuroraPalette.Charcoal,
-        primary = AuroraPalette.Sage
-    )) {
+    AuroraTheme {
         Surface(Modifier.fillMaxSize(), color = AuroraPalette.Porcelain) {
             if (page == null) HomeScreen(query, { query = it }, { page = it })
             else DetailScreen(page!!, { page = null })
