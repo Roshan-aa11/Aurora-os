@@ -7,9 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.material.ripple.ripple
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.runtime.remember
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -122,10 +119,7 @@ private fun SettingsSection(
                             if (onItemClick != null) {
                                 Modifier
                                     .clip(RoundedCornerShape(14.dp))
-                                    .clickable(
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        indication = ripple(color = AuroraPalette.Sage.copy(alpha = 0.20f))
-                                    ) { onItemClick(item) }
+                                    .clickable { onItemClick(item) }
                             } else Modifier
                         )
                         .padding(vertical = 14.dp),
